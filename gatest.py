@@ -83,10 +83,21 @@ target = '12345'
 # wheel = []         
 # for x in pop:
 #     wheel+(x*fitness(x,target))
+#def wheel(pop, x):
+#    result = []
+#    for i in range(0, x):
+#     result += pop.copy()
+#    return result;
 
+def wheel(pop):
+    result = []
+    for p in pop:
+        for i in range(0, fitness(p, target)):
+            result.append(p.copy())
+    return result
+# print(pop)
+# print(target)
 
-wheel = list(map(lambda x:list(x*fitness(x,target)), pop))
-print(pop)
-print(target)
+# print(wheel)
 
-print(wheel)
+print(wheel(pop))
