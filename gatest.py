@@ -89,15 +89,20 @@ target = '12345'
 #     result += pop.copy()
 #    return result;
 
-def wheel(pop):
-    result = []
-    for p in pop:
-        for i in range(0, fitness(p, target)):
-            result.append(p.copy())
-    return result
-# print(pop)
-# print(target)
+# def wheel(pop):
+#     result = []
+#     for p in pop:
+#         for i in range(0, fitness(p, target)):
+#             result.append(p.copy())
+#     return result
+# # print(pop)
+# # print(target)
 
-# print(wheel)
+# # print(wheel)
 
-print(wheel(pop))
+# print(wheel(pop))
+
+count=0
+for i in range(0,10):
+    count+=1
+print (count)

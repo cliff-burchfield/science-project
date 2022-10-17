@@ -4,12 +4,7 @@ from random import choice
 from functools import reduce
 
 mutationchance = 3
-grid = {}
 
-for i in range(1, 10):
-    grid[i] = {}
-    for j in range(1, 10):
-       grid[i][j] = []
 #?Creates an individual, a member of the population. Each individaul represents a strategy
 # Input: Int, int, int
 # Output: List of ints
@@ -120,7 +115,7 @@ gen = 0
 #     print("\n"+str(best_fitness(pop)))
 #     result = []
 #     for p in pop:
-#         result += [crossover(pop, 1)]
+#         result += [crossover(pop, 4)]
 #     if best_fitness(pop) == endcheck:
 #         endnum += 1
 #     elif best_fitness(pop) != endcheck:
@@ -131,19 +126,24 @@ gen = 0
 
 grid = {}
 forts = {}
-for i in range(4, 7):
+for i in range(4, 8):
     forts[i] ={}
-    for j in range(6,9):
-        forts[i][j] = "F"
+    for j in range(6,10):
+        forts[i][j] = [8]
 
 for i in range(1, 11):
     grid[i] = {}
     for j in range(1, 11):
-      
-       if forts.get(i, None) != None and forts[i].get(j, None) == "F":
-            grid[i][j] = "F"
-       else:
+        if forts.get(i, None) != None and forts[i].get(j, None) == [8]:
+            grid[i][j] = [8]
+        else:
             grid[i][j] = []
-
-print(grid)
-print(grid[6][6])
+enemycoords = {}
+enemy=0
+for x in range(1,4):
+    enemy+=1
+    x = individual(1,10,4)
+    enemycoords[x[0]][x[1]]=x
+    grid[x[0]][x[1]]=x
+if [5][5] in enemycoords:
+    print('key exists')
