@@ -3,8 +3,13 @@ from random import randint
 from random import choice
 from functools import reduce
 
-mutationchance = .04
+mutationchance = 3
+grid = {}
 
+for i in range(1, 10):
+    grid[i] = {}
+    for j in range(1, 10):
+       grid[i][j] = []
 #?Creates an individual, a member of the population. Each individaul represents a strategy
 # Input: Int, int, int
 # Output: List of ints
@@ -47,10 +52,14 @@ def pop_grade(pop):
 # Output: Int 
 def best_fitness(pop):
     bestfit = 0
+    bestchromo = []
     for x in pop:
-        if fitness(x)>bestfit:
-            bestfit = x
-    return bestfit
+        fit = fitness(x)
+        if fit>bestfit:
+            bestfit = fit
+            bestchromo = x
+    best = "Best Fitness: "+ str(bestfit)+"\n"+"Best Chromosome: "+str(bestchromo)
+    return best
 
 #?Creates the roulette wheel for parent selection   
 # Input: List of lists of int
@@ -59,7 +68,7 @@ def wheel(pop):
     result = []
     for p in pop:
         for i in range(0, fitness(p)):
-            result.append(p.copy())
+            result.append(list(p))
     return result
 
 #?Randomly selects a parent from the wheel
@@ -90,14 +99,51 @@ def crossover(pop,length):
 # Output: Int
 def mutation(gene):     #may be changed
     if randint(1,100)< mutationchance :
-        return gene+.01
+        return gene+1
     else:
         return gene
 
-pop = population(50,1,0,9)
-while True:   ##Placeholder true statement##
-    with open("GAallinfo.txt","w") as file:
-        file.write(str(pop_grade(pop)))
-    result = []
-    for p in pop:
-        result += crossover(pop, 1)
+endnum = 0
+endcheck = ''
+dele = open("GAallinfo.txt","w")
+dele.close()
+file = open('GAallinfo.txt', 'a')
+pop = population(4,1,0,9)
+gen = 0
+# while endnum != 1:   ##Placeholder true statement##
+#     gen += 1
+#     file.write("\n""Gen:  "+ str(gen))
+#     file.write("\n"+"Gen Average: "+str(pop_grade(pop)))
+#     file.write("\n"+str(best_fitness(pop)))
+#     print("\n""Gen:  "+ str(gen))
+#     print("\n"+"Gen Average: "+str(pop_grade(pop)))
+#     print("\n"+str(best_fitness(pop)))
+#     result = []
+#     for p in pop:
+#         result += [crossover(pop, 1)]
+#     if best_fitness(pop) == endcheck:
+#         endnum += 1
+#     elif best_fitness(pop) != endcheck:
+#         endnum = 0
+#         endcheck = pop_grade(pop)
+#     pop = result
+
+
+grid = {}
+forts = {}
+for i in range(4, 7):
+    forts[i] ={}
+    for j in range(6,9):
+        forts[i][j] = "F"
+
+for i in range(1, 11):
+    grid[i] = {}
+    for j in range(1, 11):
+      
+       if forts.get(i, None) != None and forts[i].get(j, None) == "F":
+            grid[i][j] = "F"
+       else:
+            grid[i][j] = []
+
+print(grid)
+print(grid[6][6])

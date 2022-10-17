@@ -1,0 +1,41 @@
+**NOTE: chromosomes and enemy weapons represent soldiers carrying the weapons
+
+
+* chromosomes will be laid out like this:
+
+        [weapon_positionx,weapon_positiony,weaponrange,weaponblastrange]
+
+  * weapon_positionx is the x position of the chromosome
+  * weapon_positiony is the y posiiton of the chromosome or weapon
+  * weaponrange is the range of the weapon or how far it can 'shoot' the bomb'
+  * where the chromosome actually fires will be determined by something that finds
+    a random x and y value inside the radius of the chromsome (look at weaponrange).
+    once it shoots, everything in the blastrange of where it shot will take two damage
+
+* need to make a grid like map where enemy fort and weapons go 
+  (does not need to be displayed or printed we just need to keep reference)
+    * enemy weapons should be laid out like the 
+      chromosomes, so [weapon_positionx,weapon_positiony,weaponrange,weaponblastrange]
+      so that it is easier to keep track of them. at least two enemy weapons
+    * fort will be any shape, probably asymmetric though. Enemy weapons will most 
+      likely be placed overlapping this if that makes sense
+
+* chromosomes and enemy weapons need to take turns using their values to 'damage'
+  each other.
+  * 4 or less turns each and damage done by each hit will probably be 2
+  * the amount of hits needed to 'kill' a weapon on either side will be 3,
+    so 6 damage will be dealt before a chromosome or weapon is removed
+  * 8 damage will be dealt to a piece of the fort before it is removed
+  * damage to weapons,chromosomes, and fort pieces must somehow be kept track of
+
+
+* the fitness value of the chromosome will be damage dealt(type of damage 
+  will be kept track of, so damage to fort+damage to enemy weapons/1.5 and rounded) - 
+  damage recieved*1.5 and rounded
+  if it is a negative number, we will have it either default to 1 or 0. depends
+  
+so actual fitness function is 
+
+    (fort_damage+round(enemy_damage/1.5))-round(damage_received*1.5)
+
+everything else finds the values of these variables.
