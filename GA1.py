@@ -145,7 +145,8 @@ enemy=0
 for x in range(1,4):
     enemy+=1
     x = individual(1,10,4)
-    enemycoords[x[0]] = {} #Dad: This fixes the bug.
+    enemycoords[x[0]] = {} #Dad: This fixes the bug. This initializes this dictionary. 
+                           #Remember its a two Demintional dictionary you only intialized the first Demintion on line 141
     enemycoords[x[0]][x[1]]=x
     grid[x[0]][x[1]]=x
 #Dad: For this if statement i'm not sure what you are trying to do here [5][5] 
