@@ -140,10 +140,17 @@ for i in range(1, 11):
             grid[i][j] = []
 enemycoords = {}
 enemy=0
+#Dad: For this consider using only one loop to create the enemyCoords and then 
+#adding it to the grid like we did above with the forts
 for x in range(1,4):
     enemy+=1
     x = individual(1,10,4)
+    enemycoords[x[0]] = {} #Dad: This fixes the bug.
     enemycoords[x[0]][x[1]]=x
     grid[x[0]][x[1]]=x
+#Dad: For this if statement i'm not sure what you are trying to do here [5][5] 
+# in enemycoords is incorrect syntax. I'm guessing you want to do:
+# if enemycoords.get(5, None) != None and enemycoords[5].get(5, None) != None 
+# looking at this again I think you are just debugging.
 if [5][5] in enemycoords:
     print('key exists')
