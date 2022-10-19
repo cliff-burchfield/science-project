@@ -3,48 +3,58 @@ from random import randint
 from random import choice
 from functools import reduce
 
+grid = {}
 mutationchance = 3
 
 #?Creates an individual, a member of the population. Each individaul represents a strategy
-# Input: Int, int, int
-# Output: List of ints
 def individual (minim,maxum,length):
     return [randint(minim, maxum) for x in range(length)]
 
 #?Creates population
-# Input: Int, int, int, int
-# Output: List of lists of ints
 def population(count,length,minim,maxum):
-
-    #count = number of individuals in pop
-    #length = number of values per individual
-    #minim = the min possible value in an individual's chromosomes
-    #maxum = max possible value in an individual's chromosomes
-
     return [individual(minim,maxum,length) for x in range(count)]
 
+#?Initializes map
+def intitialize_map(indiv):   
+    grid = {}
+    forts = {}
+    for i in range(4, 8):
+        forts[i] ={}
+        for j in range(6,10):
+            forts[i][j] = [8]
+
+    for i in range(1, 11):
+        grid[i] = {}
+        for j in range(1, 11):
+            if forts.get(i, None) != None and forts[i].get(j, None) == [8]:
+                grid[i][j] = [8]
+            else:
+                grid[i][j] = []
+    for x in range(1,4):
+        x = individual(1,10,4)
+        grid[x[0]] = {}
+        for i in range(1,4):
+            grid[x[0]][x[1]] = x.append(6)
+    
+def indiv_attack(indiv):
+    
+
 #?Finds the fitness value of an individual
-# Input: List of int
-# Output: Int
-def fitness(individual):                    #! This fitness function is only an example and a placeholder. 
-                                                    #!it will eventually be modified for the actual GA. For example, 
-    #individual = an indiviual of the population    #!the solution is predetermined in the target, but in the real GA there will be no target
-    strindi = map(str,individual)
-    intindi = int("".join(strindi))
-    fitscore = 10 - intindi
+def fitness(individual):
+    indiv = grid[individual[0]][individual[1]] = individual.append(6)
+    fort_damage = 
+    enemy_damage =
+    damage_recieved = 
+    fitscore = fort_damage + round(enemy_damage/1.5) - round(damage_received*1.5)
     return fitscore
 
 #?Finds the average fitness value of a generation
-# Input: List of lists of ints
-# Output: Int
 def pop_grade(pop):  
     summed = reduce(add, (fitness(x) for x in pop))
     return summed/len(pop)
 
 
 #?Find the best fitness value of a generation
-# Input: List of lists of ints
-# Output: Int 
 def best_fitness(pop):
     bestfit = 0
     bestchromo = []
@@ -56,9 +66,7 @@ def best_fitness(pop):
     best = "Best Fitness: "+ str(bestfit)+"\n"+"Best Chromosome: "+str(bestchromo)
     return best
 
-#?Creates the roulette wheel for parent selection   
-# Input: List of lists of int
-# Output: List of lists of int               
+#?Creates the roulette wheel for parent selection                  
 def wheel(pop):
     result = []
     for p in pop:
@@ -67,14 +75,10 @@ def wheel(pop):
     return result
 
 #?Randomly selects a parent from the wheel
-# Input: List of lists of ints
-# Output: List of ints
 def parent_selection(pop):
     return choice(wheel(pop))
 
 #?Uses the selected parent to create new individuals with crossover
-# Input: List of lists of ints, int
-# Output: List of ints
 def crossover(pop,length):
     parent1 = parent_selection(pop)
     parent2 = parent_selection(pop)
@@ -85,13 +89,7 @@ def crossover(pop,length):
     newchromo = list(map(mutation, childchromo)) 
     return newchromo
 
-    #for x in newgene:
-    #    if random.randint(1,100)<mutationchance:
-    #        x = mutation(x)
-
 #?Mutates chromosomes
-# Input: Int
-# Output: Int
 def mutation(gene):     #may be changed
     if randint(1,100)< mutationchance :
         return gene+1
@@ -124,34 +122,4 @@ gen = 0
 #     pop = result
 
 
-grid = {}
-forts = {}
-for i in range(4, 8):
-    forts[i] ={}
-    for j in range(6,10):
-        forts[i][j] = [8]
 
-for i in range(1, 11):
-    grid[i] = {}
-    for j in range(1, 11):
-        if forts.get(i, None) != None and forts[i].get(j, None) == [8]:
-            grid[i][j] = [8]
-        else:
-            grid[i][j] = []
-enemycoords = {}
-enemy=0
-#Dad: For this consider using only one loop to create the enemyCoords and then 
-#adding it to the grid like we did above with the forts
-for x in range(1,4):
-    enemy+=1
-    x = individual(1,10,4)
-    enemycoords[x[0]] = {} #Dad: This fixes the bug. This initializes this dictionary. 
-                           #Remember its a two Demintional dictionary you only intialized the first Demintion on line 141
-    enemycoords[x[0]][x[1]]=x
-    grid[x[0]][x[1]]=x
-#Dad: For this if statement i'm not sure what you are trying to do here [5][5] 
-# in enemycoords is incorrect syntax. I'm guessing you want to do:
-# if enemycoords.get(5, None) != None and enemycoords[5].get(5, None) != None 
-# looking at this again I think you are just debugging.
-if [5][5] in enemycoords:
-    print('key exists')
