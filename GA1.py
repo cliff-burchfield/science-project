@@ -35,15 +35,17 @@ def map(indiv):
         grid[x[0]] = {}
         for i in range(1,4):
             grid[x[0]][x[1]] = x.append(6)
-    
-def indiv_attack(indiv):
-    map(indiv)
+    grid[individual[0]][individual[1]] = individual.append(6)
 
+def indiv_attack(indiv,grid):
+    newx = randint(1,indiv[2])
+    newy = randint(1,indiv[2])
+    grid[indiv[0]+newx][indiv[1]+newy]
 
 #?Finds the fitness value of an individual
 def fitness(individual):
-    
-    indiv = grid[individual[0]][individual[1]] = individual.append(6)
+    indiv = individual
+    grid = map(indiv)
     fort_damage = ''
     enemy_damage = ''
     damage_recieved = ''
