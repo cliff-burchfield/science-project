@@ -15,7 +15,7 @@ def population(count,length,minim,maxum):
     return [individual(minim,maxum,length) for x in range(count)]
 
 #?Initializes map
-def intitialize_map(indiv):   
+def map(indiv):   
     grid = {}
     forts = {}
     for i in range(4, 8):
@@ -37,14 +37,16 @@ def intitialize_map(indiv):
             grid[x[0]][x[1]] = x.append(6)
     
 def indiv_attack(indiv):
-    
+    map(indiv)
+
 
 #?Finds the fitness value of an individual
 def fitness(individual):
+    
     indiv = grid[individual[0]][individual[1]] = individual.append(6)
-    fort_damage = 
-    enemy_damage =
-    damage_recieved = 
+    fort_damage = ''
+    enemy_damage = ''
+    damage_recieved = ''
     fitscore = fort_damage + round(enemy_damage/1.5) - round(damage_received*1.5)
     return fitscore
 
