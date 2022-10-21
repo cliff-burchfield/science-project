@@ -2,10 +2,15 @@ from operator import add
 from random import randint
 from random import choice
 from functools import reduce
+import operator
 
+thing = [[1],[2]]
 grid = {}
 mutationchance = 3
-
+ops = {
+    1: operator.add,
+    0: operator.sub,
+}   
 #?Creates an individual, a member of the population. Each individaul represents a strategy
 def individual (minim,maxum,length):
     return [randint(minim, maxum) for x in range(length)]
@@ -35,12 +40,27 @@ def map(indiv):
         grid[x[0]] = {}
         for i in range(1,4):
             grid[x[0]][x[1]] = x.append(6)
-    grid[individual[0]][individual[1]] = individual.append(6)
+    grid[indiv[0]][indiv[1]] = indiv.append(6)
 
 def indiv_attack(indiv,grid):
     newx = randint(1,indiv[2])
     newy = randint(1,indiv[2])
-    grid[indiv[0]+newx][indiv[1]+newy]
+    op_x = randint(0,1)
+    op_y = randint(0,1)
+
+    newxy = [ops[op_x](indiv[0],5),ops[op_y](indiv[1],5)]
+
+    if newxy[0] <= 0:
+        newxy[0] = indiv[0] + round(newx/2)
+    if newxy[1] <= 0:
+        newxy[1] = indiv[1] + round(newx/2)
+    if newxy[0] >= 11:
+        newxy[0] = indiv[0] - round(newx/2)
+    if newxy[1] >= 11:
+        newxy[1] = indiv[1] - round(newx/2)
+    return newxy
+
+print(indiv_attack([1,2,3,4],map([1,2,3,4])))
 
 #?Finds the fitness value of an individual
 def fitness(individual):

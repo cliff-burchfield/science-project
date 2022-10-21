@@ -29,7 +29,7 @@ ops = {
 op_x = random.randint(0,1)
 op_y = random.randint(0,1)
 
-newxy = grid[ops[op_x](individual[0],newx)][ops[op_y](individual[1],newy)]
+newxy = list(grid[ops[op_x](individual[0],newx)][ops[op_y](individual[1],newy)])
 
 if newxy[0] <= 0:
     newxy[0] = individual[0] + round(newx/2)
