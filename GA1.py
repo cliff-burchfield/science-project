@@ -4,7 +4,9 @@ from random import choice
 from functools import reduce
 import operator
 
-thing = [[1],[2]]
+fort_damage = 0
+enemy_damage = 0
+damage_recieved = 0
 grid = {}
 mutationchance = 3
 ops = {
@@ -32,24 +34,24 @@ def map(indiv):
         grid[i] = {}
         for j in range(1, 11):
             if forts.get(i, None) != None and forts[i].get(j, None) == [8]:
-                grid[i][j] = [8]
+                grid[i][j] = ['f',8]
             else:
                 grid[i][j] = []
     for x in range(1,4):
         x = individual(1,10,4)
         grid[x[0]] = {}
         for i in range(1,4):
-            grid[x[0]][x[1]] = x.append(6)
-    grid[indiv[0]][indiv[1]] = indiv.append(6)
+            grid[x[0]][x[1]] = x.extend([6,'e'])
+    grid[indiv[0]][indiv[1]] = indiv.extend([6,'i'])
 
-def indiv_attack(indiv,grid):
+def attack(indiv,grid):
     newx = randint(1,indiv[2])
     newy = randint(1,indiv[2])
     op_x = randint(0,1)
     op_y = randint(0,1)
 
     newxy = [ops[op_x](indiv[0],5),ops[op_y](indiv[1],5)]
-
+    grid[newxy[0]][newxy[1]]
     if newxy[0] <= 0:
         newxy[0] = indiv[0] + round(newx/2)
     if newxy[1] <= 0:
@@ -58,9 +60,21 @@ def indiv_attack(indiv,grid):
         newxy[0] = indiv[0] - round(newx/2)
     if newxy[1] >= 11:
         newxy[1] = indiv[1] - round(newx/2)
-    return newxy
+    
+    for i in (newxy[0]-newxy[4],newxy[0]+newxy[4]+1):
+        for j in (newxy[1]-newxy[4],newxy[1]+newxy[4]+1):
+            if indiv =< 0:
+                grid[i][j] = []
+                if indiv[-1] == 'f':
+                    fort_damage += 2
+                elif indiv[-1] == 'e':
+                    fort_damage += 2
+                elif indiv[-1] == 'i':
+                    damage_recieved += 2
+            f grid[i][j] != False:
+                indiv[-2]-2
 
-print(indiv_attack([1,2,3,4],map([1,2,3,4])))
+            
 
 #?Finds the fitness value of an individual
 def fitness(individual):
