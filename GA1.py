@@ -153,7 +153,7 @@ endcheck = ''
 dele = open("GAallinfo.txt","w")
 dele.close()
 file = open('GAallinfo.txt', 'a')
-pop = population(100,4,1,10)
+pop = population(4,4,1,10)
 gen = 0
 while True:
 # while endnum != 1:   ##Placeholder true statement##
@@ -164,6 +164,7 @@ while True:
     print("\n""Gen:  "+ str(gen))
     print("\n"+"Gen Average: "+str(pop_grade(pop)))
     print("\n"+str(best_fitness(pop)))
+    print(pop)
     result = []
     for p in pop:
         result += [crossover(pop, 4)]
