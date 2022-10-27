@@ -43,9 +43,8 @@ def map(indiv,enemy_list):
         for i in range(1,5):
             grid[x[0]][x[1]] = x.extend([6,'e'])
     grid[indiv[0]][indiv[1]] = indiv.extend([6,'i'])
-    return grid
 
-def attack(indiv,grid1):
+def attack(indiv):
     global grid
     global fort_damage, enemy_damage, damage_recieved
     newx = randint(1,indiv[2])
@@ -59,40 +58,44 @@ def attack(indiv,grid1):
         newxy[0] = indiv[0] + int(round(newy/2))
     if newxy[1] <= 0:
         newxy[1] = indiv[1] + int(round(newx/2))
-    if newxy[0] >= 11 or newxy[0]-indiv[3] <= 0 or newxy[0]+indiv[3] > 10:
+    if newxy[0] >= 11:
         newxy[0] = indiv[0] - int(round(newy/2))
-    if newxy[1] >= 11 or newxy[1]-indiv[3] <= 0 or newxy[1]+indiv[3] > 10:
+    if newxy[1] >= 11:
         newxy[1] = indiv[1] - int(round(newx/2))
-    for i in range(abs(newxy[0]-indiv[3]),abs((newxy[0]+indiv[3])+1)):
-        for j in range(abs(newxy[1]-indiv[3]),abs((newxy[1]+indiv[3])+1)):
-            if grid1.get(i, None) != None and grid1[i].get(j, None != None) and grid1[i][j]:
-                if grid1[i][j][-2] > 0:
-                    grid1[i][j][-1] -= 2
-                    if grid1[i][j][-1] == 'f':
+    print(newxy)
+    print(indiv)
+    for i in range(newxy[0]-indiv[3],newxy[0]+indiv[3]+1):
+        for j in range(newxy[1]-indiv[3],newxy[1]+indiv[3]+1):
+            if grid[1][5]:
+                if grid[i][j][-2] > 0:
+                    grid[i][j][-1] -= 2
+                    if grid[i][j][-1] == 'f':
                         fort_damage += 2
-                    elif grid1[i][j][-1] == 'e':
+                    elif grid[i][j][-1] == 'e':
                         fort_damage += 2
-                    elif grid1[i][j][-1] == 'i':
+                    elif grid[i][j][-1] == 'i':
                         damage_recieved += 2
-                if grid1[i][j][-1] <= 0:
-                    grid1[i][j] = []
+                if grid[i][j][-1] <= 0:
+                    grid[i][j] = []
             
-def attack_loop(indiv,enemylist,grid2):
-    global grid
+def attack_loop(indiv,enemylist):
     for i in enemylist:
-        attack(indiv,grid)
-        if not grid[indiv[0]][indiv[1]]:
+        attack(indiv)
+        if grid[indiv[0]][indiv[1]][-2] <= 0:
             break
-        attack(i,grid2)
+        attack(i)
     return [fort_damage, enemy_damage, damage_recieved]
 
 #?Finds the fitness value of an individual
+
+
 def fitness(indiv):
     global fort_damage, enemy_damage, damage_recieved
     global grid
     enemlist = [individual(0,10,4),individual(0,10,4),individual(0,10,4),individual(0,10,4)]
     grid = map(indiv,enemlist)
-    all_damage = attack_loop(indiv,enemlist,grid)
+    print(grid)
+    all_damage = attack_loop(indiv,enemlist)
     fort_damage = all_damage[0]
     enemy_damage = all_damage[1]
     damage_recieved = all_damage[2]
@@ -122,7 +125,7 @@ def best_fitness(pop):
 def wheel(pop):
     result = []
     for p in pop:
-        for i in range(0, int(fitness(p))):
+        for i in range(0, fitness(p)):
             result.append(list(p))
     return result
 
@@ -173,6 +176,3 @@ while True:
 #         endnum = 0
 #         endcheck = pop_grade(pop)
     pop = result
-
-
-
