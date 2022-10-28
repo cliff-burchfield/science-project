@@ -3,12 +3,13 @@ from random import randint
 from random import choice
 from functools import reduce
 import operator
+from math import floor
 
 fort_damage = 0
 enemy_damage = 0
 damage_recieved = 0
 grid = {}
-mutationchance = 3
+mutationchance = 4
 ops = {
     1: operator.add,
     0: operator.sub,
@@ -22,7 +23,7 @@ def population(count,length,minim,maxum):
     return [individual(minim,maxum,length) for x in range(count)]
 
 #?Initializes map
-def map(indiv,enemy_list):   
+def map1(indiv,enemy_list):   
     global grid
     grid = {}
     forts = {}
@@ -35,15 +36,17 @@ def map(indiv,enemy_list):
         grid[i] = {}
         for j in range(1, 11):
             if forts.get(i, None) != None and forts[i].get(j, None) == [8]:
-                grid[i][j] = ['f',8]
+                grid[i][j] = [8,'f']
             else:
                 grid[i][j] = []
     for x in enemy_list:
         grid[x[0]] = {}
         for i in range(1,5):
-            grid[x[0]][x[1]] = x.extend([6,'e'])
-    grid[indiv[0]][indiv[1]] = indiv.extend([6,'i'])
+            grid[x[0]][x[1]] = x + ([6,'e'])
+    grid[indiv[0]][indiv[1]] = indiv + ([6,'i'])
     return grid
+
+#Function for attacking
 
 def attack(indiv,grid1):
     global grid
@@ -67,16 +70,19 @@ def attack(indiv,grid1):
         for j in range(abs(newxy[1]-indiv[3]),abs((newxy[1]+indiv[3])+1)):
             if grid1.get(i, None) != None and grid1[i].get(j, None != None) and grid1[i][j]:
                 if grid1[i][j][-2] > 0:
-                    grid1[i][j][-1] -= 2
+                    grid1[i][j][-2] -= 2
                     if grid1[i][j][-1] == 'f':
                         fort_damage += 2
                     elif grid1[i][j][-1] == 'e':
-                        fort_damage += 2
+                        enemy_damage += 2
                     elif grid1[i][j][-1] == 'i':
                         damage_recieved += 2
-                if grid1[i][j][-1] <= 0:
+                    else:
+                        continue
+                if grid1[i][j][-2] <= 0:
                     grid1[i][j] = []
             
+#Creates the attack loop
 def attack_loop(indiv,enemylist,grid2):
     global grid
     for i in enemylist:
@@ -90,14 +96,14 @@ def attack_loop(indiv,enemylist,grid2):
 def fitness(indiv):
     global fort_damage, enemy_damage, damage_recieved
     global grid
-    enemlist = [individual(0,10,4),individual(0,10,4),individual(0,10,4),individual(0,10,4)]
-    grid = map(indiv,enemlist)
+    enemlist = [individual(1,10,4),individual(1,10,4),individual(1,10,4),individual(1,10,4)]
+    grid = map1(indiv,enemlist)
     all_damage = attack_loop(indiv,enemlist,grid)
     fort_damage = all_damage[0]
     enemy_damage = all_damage[1]
     damage_recieved = all_damage[2]
-    fitscore = fort_damage + round(enemy_damage/1.5) - round(damage_recieved*1.5)
-    grid = {}
+    fitscore = (fort_damage + floor(enemy_damage/1.5)) - floor(damage_recieved*1.5)
+    fort_damage = enemy_damage = damage_recieved = 0
     return fitscore
 
 #?Finds the average fitness value of a generation
@@ -132,6 +138,7 @@ def parent_selection(pop):
 
 #?Uses the selected parent to create new individuals with crossover
 def crossover(pop,length):
+    global fort_damage, enemy_damage, damage_recieved
     parent1 = parent_selection(pop)
     parent2 = parent_selection(pop)
     place = randint(1,length)
@@ -139,41 +146,34 @@ def crossover(pop,length):
     chromo2 = parent2[place:length]
     childchromo = chromo1 + chromo2
     newchromo = list(map(mutation, childchromo)) 
+    
     return newchromo
 
 #?Mutates chromosomes
-def mutation(gene):     #may be changed
-    if randint(1,100)< mutationchance :
+def mutation(gene):  
+    if randint(1,100)< mutationchance and gene != 10:
         return gene+1
+    elif randint(1,100)< mutationchance and gene == 10:
+        return gene-1
     else:
         return gene
 
-endnum = 0
-endcheck = ''
-dele = open("GAallinfo.txt","w")
+dele = open("GAgraphinfo.txt","w")
 dele.close()
-file = open('GAallinfo.txt', 'a')
-pop = population(4,4,1,10)
+file = open('GAgraphinfo.txt', 'a')
+pop = population(10,4,1,10)
 gen = 0
-while True:
-# while endnum != 1:   ##Placeholder true statement##
-#     gen += 1
+for i in range(1,50):
+    gen += 1
     file.write("\n""Gen:  "+ str(gen))
     file.write("\n"+"Gen Average: "+str(pop_grade(pop)))
-    file.write("\n"+str(best_fitness(pop)))
+    file.write("\n"+str(best_fitness(pop))+"\n")
+    
     print("\n""Gen:  "+ str(gen))
     print("\n"+"Gen Average: "+str(pop_grade(pop)))
     print("\n"+str(best_fitness(pop)))
-    print(pop)
+
     result = []
     for p in pop:
         result += [crossover(pop, 4)]
-#     if best_fitness(pop) == endcheck:
-#         endnum += 1
-#     elif best_fitness(pop) != endcheck:
-#         endnum = 0
-#         endcheck = pop_grade(pop)
     pop = result
-
-
-

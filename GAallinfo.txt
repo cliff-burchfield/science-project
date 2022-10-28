@@ -1,5 +1,0 @@
-
-Gen:  0
-Gen Average: 0.0
-Best Fitness: 0
-Best Chromosome: []
