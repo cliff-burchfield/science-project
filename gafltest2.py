@@ -1,4 +1,3 @@
-
 from operator import add
 from random import randint
 from random import choice
@@ -180,23 +179,23 @@ def mutation(gene):
 dele = open("GAgraphinfo.txt","w")
 dele.close()
 file = open('GAgraphinfo.txt', 'a')
-pop = population(15,4,1,10)
+pop = population(20,4,1,10)
 y = []
 y2 = []
 average = []
 gen = 0
 for i in range(1,500+1):
     gen += 1
-    # file.write("Gen:  "+ str(gen)+"\n")
-    # file.write("Gen Average: "+str(pop_grade(pop))+"\n")
-    # file.write(str(display_fitness(pop))+"\n")
+    file.write("Gen:  "+ str(gen)+"\n")
+    file.write("Gen Average: "+str(pop_grade(pop))+"\n")
+    file.write(str(display_fitness(pop))+"\n")
     
     y.append(fitnesses(pop)[0])
     y2.append(pop_grade(pop))
     
     print("Gen:  "+ str(gen))
-    print("Gen Average: "+str(pop_grade(pop)))
-    print(str(display_fitness(pop))+"\n")
+    # print("Gen Average: "+str(pop_grade(pop)))
+    # print(str(display_fitness(pop))+"\n")
 
     average.append(indivdamage/diviindiv)
     indivdamage = 0
