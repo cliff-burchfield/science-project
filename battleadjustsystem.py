@@ -12,9 +12,9 @@ def battle(indiv):
     if type(indiv) == tuple:
         gridused = grid2
     
-    while True:
-        x = random.randint(1,21)
-        y = random.randint(1,21)
+    while True:     #changed function so that the initial shot isnt random but in the general vicinity of the enemy
+        x = random.randint(13,21)
+        y = random.randint(1,8)
         shot = gridused[x][y]
         turns.append([x,y])
         if shot [-1] == 'h':
