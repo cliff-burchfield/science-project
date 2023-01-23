@@ -1,1 +1,3 @@
 Gen:  1
+Best Fitness: 0
+Best Chromosome: []

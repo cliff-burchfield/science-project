@@ -14,7 +14,7 @@ ops = {
     0: operator.sub,
 }   
 #?Creates an individual, a member of the population. Each individaul represents a strategy
-def individual (minim,maxum,length):
+def individual(minim,maxum,length):
     genes = [random.randint(minim, maxum) for x in range(length-1)]
     genes.append(random.randint(1,4))
     return genes
@@ -26,9 +26,9 @@ def population(count,length,minim,maxum):
 def map():
     grid = {}
     forts = {}
-    for i in range(4, 18):
+    for i in range(1, 21):
         forts[i] ={}
-        for j in range(10,19):
+        for j in range(1,21):
             forts[i][j] = [8]
 
     for i in range(1, 21):
@@ -50,8 +50,10 @@ def battle(indiv):
 
     if type(indiv) == list:
         gridused = grid1
-    if type(indiv) == tuple:
+    elif type(indiv) == tuple:
         gridused = grid2
+    else:
+        return []
     count = 0
     while True:     #changed function so that the initial shot isnt random but in the general vicinity of the enemy
         count+=1
@@ -66,11 +68,6 @@ def battle(indiv):
                     y+=indiv[2]
                     turns.append([x,y])
                 break
-        else:
-            x = random.randint(1,21)
-            y = random.randint(1,21)
-            shot = gridused[x][y]
-            turns.append([x,y])
     return turns
 
             
@@ -79,19 +76,24 @@ def battleloop(indiv, enemy):
     global grid1, grid2
     damage_taken = 0
     damage_caused = 0
+   
     indiv_turns = battle(indiv)
     enem_turns = battle(enemy)
-    for i, j in zip(range(indiv_turns), range(enem_turns)):
-        for x in range (i[2]):
-            for y in range (i[2]):
-                if grid1[x][y]:
-                    grid1[x][y] - 2
+    for i, j in zip((indiv_turns), (enem_turns)):
+        for x in range (i[0]-indiv[2],i[0]+1):
+            for y in range (i[0]-indiv[2],i[1]+1):
+                if x in grid1:
+                    if y in grid1[x]:
+                        if grid1[x][y]:
+                          grid1[x][y][0] - 2
         if damage_caused >= 8: #placeholder value. change later
             break
-        for x in range (j[2]):
-            for y in range (j[2]):
-                if grid1[x][y]:
-                    grid1[x][y] - 2
+        for x in range (j[0]):
+            for y in range (j[1]):
+                if x in grid2:
+                    if y in grid1[x]:
+                        if grid1[x][y]:
+                          grid1[x][y][0] - 2
         if damage_taken >= 8: #placeholder value. change later
             break
     return damage_caused
@@ -112,7 +114,9 @@ def display_fitness(pop):
     bestfit = 0
     bestchromo = []
     for x in pop:
+       
         fit = fitness(x)
+        
         if fit>bestfit:
             bestfit = fit
             bestchromo = x
@@ -132,6 +136,9 @@ def fitnesses(pop):
 #?Creates the roulette wheel for parent selection                  
 def wheel(pop):
     result = []
+    print(pop)
+    if type(pop) != list and type(pop) != tuple:
+        quit()
     for p in pop:
         for i in range(0, int(fitness(p))):
             result.append(list(p))
@@ -139,10 +146,11 @@ def wheel(pop):
 
 #?Randomly selects a parent from the wheel
 def parent_selection(pop):
+    
     return random.choice(wheel(pop))
 
 #?Uses the selected parent to create new individuals with crossover
-def crossover(pop,length):
+def crossover(pop, length):
     global fort_damage, enemy_damage, damage_recieved
     parent1 = parent_selection(pop)
     parent2 = parent_selection(pop)
@@ -167,9 +175,10 @@ dele = open("GAgraphinfo.txt","w")
 dele.close()
 file = open('GAgraphinfo.txt', 'a')
 pop = population(15,3,-10,11)
+
 y = []
 y2 = []
-average = []
+#average = []
 gen = 0
 for i in range(1,500+1):
     gen += 1
@@ -181,11 +190,10 @@ for i in range(1,500+1):
     print("Gen:  "+ str(gen))
     print(str(display_fitness(pop))+"\n")
 
-    average.append(indivdamage/diviindiv)
-    indivdamage = 0
-    diviindiv = 0
+   # average.append(indivdamage/diviindiv)
+    
     result = []
-    for p in pop:
+    for x in range(1, len(pop) + 1):
         result += [crossover(pop, 4)]
     pop = result
 
