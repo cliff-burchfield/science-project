@@ -1,3 +1,87 @@
 Gen:  1
-Best Fitness: 0
-Best Chromosome: []
+Best Fitness: 80
+Best Chromosome: [9, -4, 4]
+Gen:  2
+Best Fitness: 70
+Best Chromosome: [3, -5, 4]
+Gen:  3
+Best Fitness: 80
+Best Chromosome: [-10, 10, 4]
+Gen:  4
+Best Fitness: 80
+Best Chromosome: [-9, -5, 4]
+Gen:  5
+Best Fitness: 90
+Best Chromosome: [-9, 8, 4]
+Gen:  6
+Best Fitness: 88
+Best Chromosome: [-9, 8, 4]
+Gen:  7
+Best Fitness: 90
+Best Chromosome: [-10, 9, 4]
+Gen:  8
+Best Fitness: 64
+Best Chromosome: [-1, -5, 3]
+Gen:  9
+Best Fitness: 100
+Best Chromosome: [-1, -5, 4]
+Gen:  10
+Best Fitness: 90
+Best Chromosome: [3, -5, 4]
+Gen:  11
+Best Fitness: 80
+Best Chromosome: [-9, 9, 4]
+Gen:  12
+Best Fitness: 90
+Best Chromosome: [3, -5, 4]
+Gen:  13
+Best Fitness: 88
+Best Chromosome: [3, -5, 4]
+Gen:  14
+Best Fitness: 100
+Best Chromosome: [-10, 9, 4]
+Gen:  15
+Best Fitness: 90
+Best Chromosome: [3, -5, 4]
+Gen:  16
+Best Fitness: 90
+Best Chromosome: [-9, -5, 4]
+Gen:  17
+Best Fitness: 80
+Best Chromosome: [3, -5, 4]
+Gen:  18
+Best Fitness: 100
+Best Chromosome: [-9, -5, 4]
+Gen:  19
+Best Fitness: 56
+Best Chromosome: [3, -5, 4]
+Gen:  20
+Best Fitness: 70
+Best Chromosome: [-9, -5, 4]
+Gen:  21
+Best Fitness: 90
+Best Chromosome: [-9, -5, 4]
+Gen:  22
+Best Fitness: 90
+Best Chromosome: [3, -5, 4]
+Gen:  23
+Best Fitness: 100
+Best Chromosome: [-9, -6, 4]
+Gen:  24
+Best Fitness: 60
+Best Chromosome: [-9, -5, 4]
+Gen:  25
+Best Fitness: 90
+Best Chromosome: [2, -5, 4]
+Gen:  26
+Best Fitness: 70
+Best Chromosome: [3, -5, 4]
+Gen:  27
+Best Fitness: 88
+Best Chromosome: [-9, -5, 4]
+Gen:  28
+Best Fitness: 90
+Best Chromosome: [2, -5, 4]
+Gen:  29
+Best Fitness: 70
+Best Chromosome: [2, -6, 4]

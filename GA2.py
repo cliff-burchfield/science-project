@@ -23,12 +23,12 @@ def individual(minim,maxum,length):
 def population(count,length,minim,maxum):
     return [individual(minim,maxum,length) for x in range(count)]
 
-def map():
+def grids():
     grid = {}
     forts = {}
-    for i in range(1, 21):
+    for i in range(8,19):
         forts[i] ={}
-        for j in range(1,21):
+        for j in range(2,18):
             forts[i][j] = [8]
 
     for i in range(1, 21):
@@ -57,8 +57,8 @@ def battle(indiv):
     count = 0
     while True:     #changed function so that the initial shot isnt random but in the general vicinity of the enemy
         count+=1
-        x = random.randint(2,19)
-        y = random.randint(8,20)
+        x = random.randint(1,19)
+        y = random.randint(7,20)
         shot = gridused[x][y]
         turns.append([x,y])
         if shot:
@@ -86,14 +86,16 @@ def battleloop(indiv, enemy):
                     if y in grid1[x]:
                         if grid1[x][y]:
                           grid1[x][y][0] - 2
+                          damage_caused += 2
         if damage_caused >= 8: #placeholder value. change later
             break
         for x in range (j[0]):
             for y in range (j[1]):
                 if x in grid2:
-                    if y in grid1[x]:
-                        if grid1[x][y]:
-                          grid1[x][y][0] - 2
+                    if y in grid2[x]:
+                        if grid2[x][y]:
+                          grid2[x][y][0] - 2
+                          damage_taken += 2
         if damage_taken >= 8: #placeholder value. change later
             break
     return damage_caused
@@ -102,12 +104,10 @@ def battleloop(indiv, enemy):
 def fitness(indiv):
     global grid1, grid2
     enem = tuple(individual(1,10,3))
-    grid1 = map()
-    grid2 = map()
+    grid1 = grids()
+    grid2 = grids()
     fitscore = battleloop(indiv,enem)
     return fitscore
-
-
 
 #?Find the best fitness value of a generation
 def display_fitness(pop):
@@ -137,8 +137,7 @@ def fitnesses(pop):
 def wheel(pop):
     result = []
     print(pop)
-    if type(pop) != list and type(pop) != tuple:
-        quit()
+
     for p in pop:
         for i in range(0, int(fitness(p))):
             result.append(list(p))
@@ -146,7 +145,6 @@ def wheel(pop):
 
 #?Randomly selects a parent from the wheel
 def parent_selection(pop):
-    
     return random.choice(wheel(pop))
 
 #?Uses the selected parent to create new individuals with crossover
